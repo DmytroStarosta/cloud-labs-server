@@ -9,7 +9,7 @@ import pymysql
 from http import HTTPStatus
 import secrets
 from typing import Dict, Any
-
+from config import Config
 from flask import Flask
 from flask_restx import Api, Resource
 from flask_sqlalchemy import SQLAlchemy
@@ -30,14 +30,10 @@ todos = {}
 
 def create_app(app_config: Dict[str, Any], additional_config: Dict[str, Any]) -> Flask:
 
-    _process_input_config(app_config, additional_config)
     app = Flask(__name__)
-    app.config["SECRET_KEY"] = secrets.token_hex(16)
-    app.config = {**app.config, **app_config}
-
+    app.config.from_object(Config)
     _init_db(app)
     register_routes(app)
-    _init_swagger(app)
 
     return app
 
