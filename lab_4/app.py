@@ -1,9 +1,4 @@
-"""
-2022
-apavelchak@gmail.com
-© Andrii Pavelchak
-"""
-#test
+
 import os
 
 from waitress import serve
