@@ -1,7 +1,7 @@
 from flask import Blueprint, Response, make_response, jsonify
 from http import HTTPStatus
 from flask_jwt_extended import create_access_token
-from my_project.auth.domain.orders.parking import Parking
+from my_project.auth.domain.orders.owner import Owner
 
 auth_bp = Blueprint('auth', __name__, url_prefix="/auth")
 
@@ -19,7 +19,7 @@ def login() -> Response:
             properties:
               name:
                 type: string
-                example: "Parking"
+                example: "owner"
               password:
                 type: string
                 example: "password123"
@@ -35,9 +35,9 @@ def login() -> Response:
     """
 
     data = request.get_json()
-    parking = Parking.query.filter_by(name=data["name"]).first()
-    if parking is not None and parking.password == data['password']:
-        access_token = create_access_token(identity=str(parking.id))
+    owner = Owner.query.filter_by(name=data["name"]).first()
+    if owner is not None and owner.password == data['password']:
+        access_token = create_access_token(identity=str(owner.id))
         return make_response(jsonify({'access_token': access_token}), HTTPStatus.OK)
 
     return make_response(jsonify({"message": f"Not found Park {data['name']} or bad password"}), HTTPStatus.NOT_FOUND)
