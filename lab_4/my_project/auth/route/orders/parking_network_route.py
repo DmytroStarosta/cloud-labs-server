@@ -7,6 +7,7 @@ parking_network_bp = Blueprint('parking_network', __name__, url_prefix='/parking
 
 
 @parking_network_bp.route('', methods=['GET'])
+@jwt_required()
 def get_all_parking_networks() -> Response:
     parking_networks = parking_network_controller.find_all()
     parking_network_dto = [network.put_into_dto() for network in parking_networks]
@@ -22,6 +23,7 @@ def create_parking_network() -> Response:
 
 
 @parking_network_bp.route('/<int:parking_network_id>', methods=['GET'])
+@jwt_required()
 def get_parking_network_by_id(parking_network_id: int) -> Response:
     parking_network = parking_network_controller.find_by_id(parking_network_id)
     if parking_network:
@@ -30,6 +32,7 @@ def get_parking_network_by_id(parking_network_id: int) -> Response:
 
 
 @parking_network_bp.route('/<int:parking_network_id>', methods=['PUT'])
+@jwt_required()
 def update_parking_network(parking_network_id: int) -> Response:
     content = request.get_json()
     parking_network = ParkingNetwork.create_from_dto(content)
@@ -38,6 +41,7 @@ def update_parking_network(parking_network_id: int) -> Response:
 
 
 @parking_network_bp.route('/<int:parking_network_id>', methods=['DELETE'])
+@jwt_required()
 def delete_parking_network(parking_network_id: int) -> Response:
     parking_network_controller.delete_parking_network(parking_network_id)
     return make_response("Parking Network deleted", HTTPStatus.NO_CONTENT)

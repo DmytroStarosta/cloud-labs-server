@@ -7,6 +7,7 @@ user_car_id_bp = Blueprint('user_car_id', __name__, url_prefix='/user_car_id')
 
 
 @user_car_id_bp.route('', methods=['GET'])
+@jwt_required()
 def get_all_user_car_ids() -> Response:
     user_car_ids = user_car_id_controller.find_all()
     user_car_id_dto = [user_car_id.put_into_dto() for user_car_id in user_car_ids]
@@ -22,6 +23,7 @@ def create_user_car_id() -> Response:
 
 
 @user_car_id_bp.route('/<int:user_id>/<int:car_id>', methods=['GET'])
+@jwt_required()
 def get_user_car_id_by_user_and_car_id(user_id: int, car_id: int) -> Response:
     user_car_id = user_car_id_controller.find_by_user_and_car_id(user_id, car_id)
     if user_car_id:
@@ -30,6 +32,7 @@ def get_user_car_id_by_user_and_car_id(user_id: int, car_id: int) -> Response:
 
 
 @user_car_id_bp.route('/<int:user_id>/<int:car_id>', methods=['PUT'])
+@jwt_required()
 def update_user_car_id(user_id: int, car_id: int) -> Response:
     content = request.get_json()
     user_car_id = UserCarId.create_from_dto(content)
@@ -38,6 +41,7 @@ def update_user_car_id(user_id: int, car_id: int) -> Response:
 
 
 @user_car_id_bp.route('/<int:user_id>/<int:car_id>', methods=['DELETE'])
+@jwt_required()
 def delete_user_car_id(user_id: int, car_id: int) -> Response:
     user_car_id_controller.delete_user_car_id(user_id, car_id)
     return make_response("UserCarId deleted", HTTPStatus.NO_CONTENT)

@@ -7,6 +7,7 @@ users_bp = Blueprint('users', __name__, url_prefix='/users')
 
 
 @users_bp.route('', methods=['GET'])
+@jwt_required()
 def get_all_users() -> Response:
     users = user_controller.find_all()
     user_dto = [user.put_into_dto() for user in users]
@@ -22,6 +23,7 @@ def create_user() -> Response:
 
 
 @users_bp.route('/<int:user_id>', methods=['GET'])
+@jwt_required()
 def get_user_by_id(user_id: int) -> Response:
     user = user_controller.find_by_id(user_id)
     if user:
@@ -30,6 +32,7 @@ def get_user_by_id(user_id: int) -> Response:
 
 
 @users_bp.route('/<int:user_id>', methods=['PUT'])
+@jwt_required()
 def update_user(user_id: int) -> Response:
     content = request.get_json()
     user = User.create_from_dto(content)
@@ -38,12 +41,14 @@ def update_user(user_id: int) -> Response:
 
 
 @users_bp.route('/<int:user_id>', methods=['DELETE'])
+@jwt_required()
 def delete_user(user_id: int) -> Response:
     user_controller.delete_user(user_id)
     return make_response("User deleted", HTTPStatus.NO_CONTENT)
 
 
 @users_bp.route('/surname/<surname>', methods=['GET'])
+@jwt_required()
 def get_user_by_surname(surname: str) -> Response:
     users = user_controller.find_by_surname(surname)
     if users:
@@ -53,6 +58,7 @@ def get_user_by_surname(surname: str) -> Response:
 
 
 @users_bp.route('/email/<string:email>', methods=['GET'])
+@jwt_required()
 def get_users_by_email(email: str) -> Response:
     users = user_controller.get_users_by_email(email)
     return make_response(jsonify([user.put_into_dto() for user in users]), HTTPStatus.OK)

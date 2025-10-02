@@ -7,6 +7,7 @@ address_bp = Blueprint('address', __name__, url_prefix='/address')
 
 
 @address_bp.route('', methods=['GET'])
+@jwt_required()
 def get_all_addresses() -> Response:
     addresses = address_controller.find_all()
     address_dto = [address.put_into_dto() for address in addresses]
@@ -22,6 +23,7 @@ def create_address() -> Response:
 
 
 @address_bp.route('/<int:address_id>', methods=['GET'])
+@jwt_required()
 def get_address_by_id(address_id: int) -> Response:
     address = address_controller.find_by_id(address_id)
     if address:
@@ -30,6 +32,7 @@ def get_address_by_id(address_id: int) -> Response:
 
 
 @address_bp.route('/<int:address_id>', methods=['PUT'])
+@jwt_required()
 def update_address(address_id: int) -> Response:
     content = request.get_json()
     address = Address.create_from_dto(content)
@@ -38,6 +41,7 @@ def update_address(address_id: int) -> Response:
 
 
 @address_bp.route('/<int:address_id>', methods=['DELETE'])
+@jwt_required()
 def delete_address(address_id: int) -> Response:
     address_controller.delete_address(address_id)
     return make_response("Address deleted", HTTPStatus.NO_CONTENT)

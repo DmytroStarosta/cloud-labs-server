@@ -2,11 +2,13 @@ from http import HTTPStatus
 from flask import Blueprint, jsonify, Response, request, make_response
 from my_project.auth.controller import owner_controller
 from my_project.auth.domain.orders.owner import Owner
+from flask_jwt_extended import jwt_required
 
 owner_bp = Blueprint('owner', __name__, url_prefix='/owners')
 
 
 @owner_bp.route('', methods=['GET'])
+@jwt_required()
 def get_all_owners() -> Response:
     owners = owner_controller.find_all()
     owner_dto = [owner.put_into_dto() for owner in owners]
@@ -22,6 +24,7 @@ def create_owner() -> Response:
 
 
 @owner_bp.route('/<int:owner_id>', methods=['GET'])
+@jwt_required()
 def get_owner_by_id(owner_id: int) -> Response:
     owner = owner_controller.find_by_id(owner_id)
     if owner:
@@ -30,6 +33,7 @@ def get_owner_by_id(owner_id: int) -> Response:
 
 
 @owner_bp.route('/<int:owner_id>', methods=['PUT'])
+@jwt_required()
 def update_owner(owner_id: int) -> Response:
     content = request.get_json()
     owner = Owner.create_from_dto(content)
@@ -38,6 +42,7 @@ def update_owner(owner_id: int) -> Response:
 
 
 @owner_bp.route('/<int:owner_id>', methods=['DELETE'])
+@jwt_required()
 def delete_owner(owner_id: int) -> Response:
     owner_controller.delete_owner(owner_id)
     return make_response("Owner deleted", HTTPStatus.NO_CONTENT)

@@ -22,7 +22,6 @@ def get_all_parkings() -> Response:
     return make_response(jsonify(parking_dto), HTTPStatus.OK)
 
 @parking_bp.post('')
-@jwt_required()
 def create_parking() -> Response:
     content = request.get_json()
     parking = Parking.create_from_dto(content)

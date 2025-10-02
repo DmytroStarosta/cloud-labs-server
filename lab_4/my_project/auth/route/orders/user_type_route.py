@@ -7,6 +7,7 @@ user_types_bp = Blueprint('user_types', __name__, url_prefix='/user_types')
 
 
 @user_types_bp.route('', methods=['GET'])
+@jwt_required()
 def get_all_user_types() -> Response:
     user_types = user_type_controller.find_all()
     user_type_dto = [user_type.put_into_dto() for user_type in user_types]
@@ -22,6 +23,7 @@ def create_user_type() -> Response:
 
 
 @user_types_bp.route('/<int:user_type_id>', methods=['GET'])
+@jwt_required()
 def get_user_type_by_id(user_type_id: int) -> Response:
     user_type = user_type_controller.find_by_id(user_type_id)
     if user_type:
@@ -30,6 +32,7 @@ def get_user_type_by_id(user_type_id: int) -> Response:
 
 
 @user_types_bp.route('/<int:user_type_id>', methods=['PUT'])
+@jwt_required()
 def update_user_type(user_type_id: int) -> Response:
     content = request.get_json()
     user_type = UserType.create_from_dto(content)
@@ -38,12 +41,14 @@ def update_user_type(user_type_id: int) -> Response:
 
 
 @user_types_bp.route('/<int:user_type_id>', methods=['DELETE'])
+@jwt_required()
 def delete_user_type(user_type_id: int) -> Response:
     user_type_controller.delete_user_type(user_type_id)
     return make_response("User type deleted", HTTPStatus.NO_CONTENT)
 
 
 @user_types_bp.route('/type/<string:type_name>', methods=['GET'])
+@jwt_required()
 def get_user_types_by_name(type_name: str) -> Response:
     user_types = user_type_controller.get_user_types_by_name(type_name)
     return make_response(jsonify([user_type.put_into_dto() for user_type in user_types]), HTTPStatus.OK)

@@ -7,6 +7,7 @@ status_type_bp = Blueprint('status_type', __name__, url_prefix='/status_types')
 
 
 @status_type_bp.route('', methods=['GET'])
+@jwt_required()
 def get_all_status_types() -> Response:
     status_types = status_type_controller.find_all()
     status_type_dto = [status_type.put_into_dto() for status_type in status_types]
@@ -22,6 +23,7 @@ def create_status_type() -> Response:
 
 
 @status_type_bp.route('/<int:status_type_id>', methods=['GET'])
+@jwt_required()
 def get_status_type_by_id(status_type_id: int) -> Response:
     status_type = status_type_controller.find_by_id(status_type_id)
     if status_type:
@@ -30,6 +32,7 @@ def get_status_type_by_id(status_type_id: int) -> Response:
 
 
 @status_type_bp.route('/<int:status_type_id>', methods=['PUT'])
+@jwt_required()
 def update_status_type(status_type_id: int) -> Response:
     content = request.get_json()
     status_type = StatusType.create_from_dto(content)
@@ -38,6 +41,7 @@ def update_status_type(status_type_id: int) -> Response:
 
 
 @status_type_bp.route('/<int:status_type_id>', methods=['DELETE'])
+@jwt_required()
 def delete_status_type(status_type_id: int) -> Response:
     status_type_controller.delete_status_type(status_type_id)
     return make_response("Status Type deleted", HTTPStatus.NO_CONTENT)

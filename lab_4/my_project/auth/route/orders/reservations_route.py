@@ -7,6 +7,7 @@ reservations_bp = Blueprint('reservations', __name__, url_prefix='/reservations'
 
 
 @reservations_bp.route('', methods=['GET'])
+@jwt_required()
 def get_all_reservations() -> Response:
     reservations = reservations_controller.find_all()
     reservations_dto = [reservation.put_into_dto() for reservation in reservations]
@@ -22,6 +23,7 @@ def create_reservation() -> Response:
 
 
 @reservations_bp.route('/<int:reservation_id>', methods=['GET'])
+@jwt_required()
 def get_reservation_by_id(reservation_id: int) -> Response:
     reservation = reservations_controller.find_by_id(reservation_id)
     if reservation:
@@ -30,6 +32,7 @@ def get_reservation_by_id(reservation_id: int) -> Response:
 
 
 @reservations_bp.route('/<int:reservation_id>', methods=['PUT'])
+@jwt_required()
 def update_reservation(reservation_id: int) -> Response:
     content = request.get_json()
     reservation = Reservations.create_from_dto(content)
@@ -38,6 +41,7 @@ def update_reservation(reservation_id: int) -> Response:
 
 
 @reservations_bp.route('/<int:reservation_id>', methods=['DELETE'])
+@jwt_required()
 def delete_reservation(reservation_id: int) -> Response:
     reservations_controller.delete_reservation(reservation_id)
     return make_response

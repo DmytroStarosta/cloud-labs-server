@@ -7,6 +7,7 @@ parking_place_history_bp = Blueprint('parking_place_history', __name__, url_pref
 
 
 @parking_place_history_bp.route('', methods=['GET'])
+@jwt_required()
 def get_all_parking_place_histories() -> Response:
     histories = parking_place_history_controller.find_all()
     histories_dto = [history.put_into_dto() for history in histories]
@@ -22,6 +23,7 @@ def create_parking_place_history() -> Response:
 
 
 @parking_place_history_bp.route('/<int:history_id>', methods=['GET'])
+@jwt_required()
 def get_parking_place_history_by_id(history_id: int) -> Response:
     history = parking_place_history_controller.find_by_id(history_id)
     if history:
@@ -30,6 +32,7 @@ def get_parking_place_history_by_id(history_id: int) -> Response:
 
 
 @parking_place_history_bp.route('/<int:history_id>', methods=['PUT'])
+@jwt_required()
 def update_parking_place_history(history_id: int) -> Response:
     content = request.get_json()
     history = ParkingPlaceHistory.create_from_dto(content)
@@ -38,6 +41,7 @@ def update_parking_place_history(history_id: int) -> Response:
 
 
 @parking_place_history_bp.route('/<int:history_id>', methods=['DELETE'])
+@jwt_required()
 def delete_parking_place_history(history_id: int) -> Response:
     parking_place_history_controller.delete_parking_place_history(history_id)
     return make_response("Parking Place History deleted", HTTPStatus.NO_CONTENT)

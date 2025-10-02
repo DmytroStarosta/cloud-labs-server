@@ -7,6 +7,7 @@ voucher_bp = Blueprint('voucher', __name__, url_prefix='/voucher')
 
 
 @voucher_bp.route('', methods=['GET'])
+@jwt_required()
 def get_all_vouchers() -> Response:
     vouchers = voucher_controller.find_all()
     voucher_dto = [voucher.put_into_dto() for voucher in vouchers]
@@ -22,6 +23,7 @@ def create_voucher() -> Response:
 
 
 @voucher_bp.route('/<int:voucher_id>', methods=['GET'])
+@jwt_required()
 def get_voucher_by_id(voucher_id: int) -> Response:
     voucher = voucher_controller.find_by_id(voucher_id)
     if voucher:
@@ -30,6 +32,7 @@ def get_voucher_by_id(voucher_id: int) -> Response:
 
 
 @voucher_bp.route('/<int:voucher_id>', methods=['PUT'])
+@jwt_required()
 def update_voucher(voucher_id: int) -> Response:
     content = request.get_json()
     voucher = Voucher.create_from_dto(content)
@@ -38,6 +41,7 @@ def update_voucher(voucher_id: int) -> Response:
 
 
 @voucher_bp.route('/<int:voucher_id>', methods=['DELETE'])
+@jwt_required()
 def delete_voucher(voucher_id: int) -> Response:
     voucher_controller.delete_voucher(voucher_id)
     return make_response("Voucher deleted", HTTPStatus.NO_CONTENT)

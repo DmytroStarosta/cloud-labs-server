@@ -7,6 +7,7 @@ type_of_voucher_bp = Blueprint('type_of_voucher', __name__, url_prefix='/type_of
 
 
 @type_of_voucher_bp.route('', methods=['GET'])
+@jwt_required()
 def get_all_types_of_vouchers() -> Response:
     types_of_vouchers = type_of_voucher_controller.find_all()
     type_of_voucher_dto = [type_of_voucher.put_into_dto() for type_of_voucher in types_of_vouchers]
@@ -22,6 +23,7 @@ def create_type_of_voucher() -> Response:
 
 
 @type_of_voucher_bp.route('/<int:type_of_voucher_id>', methods=['GET'])
+@jwt_required()
 def get_type_of_voucher_by_id(type_of_voucher_id: int) -> Response:
     type_of_voucher = type_of_voucher_controller.find_by_id(type_of_voucher_id)
     if type_of_voucher:
@@ -30,6 +32,7 @@ def get_type_of_voucher_by_id(type_of_voucher_id: int) -> Response:
 
 
 @type_of_voucher_bp.route('/<int:type_of_voucher_id>', methods=['PUT'])
+@jwt_required()
 def update_type_of_voucher(type_of_voucher_id: int) -> Response:
     content = request.get_json()
     type_of_voucher = TypeOfVoucher.create_from_dto(content)
@@ -38,6 +41,7 @@ def update_type_of_voucher(type_of_voucher_id: int) -> Response:
 
 
 @type_of_voucher_bp.route('/<int:type_of_voucher_id>', methods=['DELETE'])
+@jwt_required()
 def delete_type_of_voucher(type_of_voucher_id: int) -> Response:
     type_of_voucher_controller.delete_type_of_voucher(type_of_voucher_id)
     return make_response("Type of Voucher deleted", HTTPStatus.NO_CONTENT)

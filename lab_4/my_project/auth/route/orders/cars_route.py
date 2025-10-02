@@ -7,6 +7,7 @@ cars_bp = Blueprint('cars', __name__, url_prefix='/cars')
 
 
 @cars_bp.route('', methods=['GET'])
+@jwt_required()
 def get_all_cars() -> Response:
     cars = cars_controller.find_all()
     car_dto = [car.put_into_dto() for car in cars]
@@ -22,6 +23,7 @@ def create_car() -> Response:
 
 
 @cars_bp.route('/<int:car_id>', methods=['GET'])
+@jwt_required()
 def get_car_by_id(car_id: int) -> Response:
     car = cars_controller.find_by_id(car_id)
     if car:
@@ -30,6 +32,7 @@ def get_car_by_id(car_id: int) -> Response:
 
 
 @cars_bp.route('/<int:car_id>', methods=['PUT'])
+@jwt_required()
 def update_car(car_id: int) -> Response:
     content = request.get_json()
     car = Cars.create_from_dto(content)
@@ -38,6 +41,7 @@ def update_car(car_id: int) -> Response:
 
 
 @cars_bp.route('/<int:car_id>', methods=['DELETE'])
+@jwt_required()
 def delete_car(car_id: int) -> Response:
     cars_controller.delete_car(car_id)
     return make_response("Car deleted", HTTPStatus.NO_CONTENT)

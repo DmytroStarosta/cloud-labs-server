@@ -7,6 +7,7 @@ parking_place_bp = Blueprint('parking_place', __name__, url_prefix='/parking_pla
 
 
 @parking_place_bp.route('', methods=['GET'])
+@jwt_required()
 def get_all_parking_places() -> Response:
     parking_places = parking_place_controller.find_all()
     parking_place_dto = [parking_place.put_into_dto() for parking_place in parking_places]
@@ -22,6 +23,7 @@ def create_parking_place() -> Response:
 
 
 @parking_place_bp.route('/<int:parking_place_id>', methods=['GET'])
+@jwt_required()
 def get_parking_place_by_id(parking_place_id: int) -> Response:
     parking_place = parking_place_controller.find_by_id(parking_place_id)
     if parking_place:
@@ -30,6 +32,7 @@ def get_parking_place_by_id(parking_place_id: int) -> Response:
 
 
 @parking_place_bp.route('/<int:parking_place_id>', methods=['PUT'])
+@jwt_required()
 def update_parking_place(parking_place_id: int) -> Response:
     content = request.get_json()
     parking_place = ParkingPlace.create_from_dto(content)
@@ -38,6 +41,7 @@ def update_parking_place(parking_place_id: int) -> Response:
 
 
 @parking_place_bp.route('/<int:parking_place_id>', methods=['DELETE'])
+@jwt_required()
 def delete_parking_place(parking_place_id: int) -> Response:
     parking_place_controller.delete_parking_place(parking_place_id)
     return make_response("Parking Place deleted", HTTPStatus.NO_CONTENT)
