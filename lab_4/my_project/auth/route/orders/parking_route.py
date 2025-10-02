@@ -5,7 +5,7 @@ from my_project.auth.domain.orders.parking import Parking
 
 parking_bp = Blueprint('parking', __name__, url_prefix='/parkings')
 
-@park_bp.get('/<int:park_id>')
+@parking_bp.get('/<int:park_id>')
 def get_park(park_id: int) -> Response:
     """
     Get Park by ID
