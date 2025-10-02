@@ -1,38 +1,27 @@
-
 import os
+from flask import Flask
+from flask_jwt_extended import JWTManager
+from my_project.auth.routes.parking_routes import parking_bp
+from my_project.config import Config
+from my_project import db
 
-from waitress import serve
-import yaml
 
-from my_project import create_app
+def create_app(config_object=None):
+    app = Flask(__name__)
 
-DEVELOPMENT_PORT = 5000
-PRODUCTION_PORT = 8080
-HOST = "0.0.0.0"
-DEVELOPMENT = "development"
-PRODUCTION = "production"
-FLASK_ENV = "FLASK_ENV"
-ADDITIONAL_CONFIG = "ADDITIONAL_CONFIG"
+    if config_object is None:
+        app.config.from_object(Config)
+    else:
+        app.config.from_object(config_object)
 
-if __name__ == '__main__':
+    db.init_app(app)
+    jwt = JWTManager(app)
+
+    app.register_blueprint(parking_bp)
+
+    return app
+
+
+if __name__ == "__main__":
     app = create_app()
     app.run(host="0.0.0.0", port=5000, debug=True)
-
-
-    # flask_env = os.environ.get(FLASK_ENV, DEVELOPMENT).lower()
-    # config_yaml_path = os.path.join(os.getcwd(), 'config', 'app.yml')
-    #
-    # with open(config_yaml_path, "r", encoding='utf-8') as yaml_file:
-    #     config_data_dict = yaml.load(yaml_file, Loader=yaml.FullLoader)
-    #     additional_config = config_data_dict[ADDITIONAL_CONFIG]
-    #
-    #     if flask_env == DEVELOPMENT:
-    #         config_data = config_data_dict[DEVELOPMENT]
-    #         create_app(config_data, additional_config).run(port=DEVELOPMENT_PORT, debug=True)
-    #
-    #     elif flask_env == PRODUCTION:
-    #         config_data = config_data_dict[PRODUCTION]
-    #         serve(create_app(config_data, additional_config), host=HOST, port=PRODUCTION_PORT)
-    #
-    #     else:
-    #         raise ValueError(f"Check OS environment variable '{FLASK_ENV}'")
