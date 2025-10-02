@@ -13,6 +13,7 @@ class Parking(db.Model, IDto):
     location = db.Column(db.String(100), nullable=False)
     parking_network_id = db.Column(db.Integer, ForeignKey('parking_network.id'), nullable=False)
     address_id = db.Column(db.Integer, ForeignKey('address.id'), nullable=False)
+    password = db.Column(db.String, nullable=False)
 
     parking_places = relationship('ParkingPlace', back_populates='parking')
     vouchers = relationship('Voucher', back_populates='parking')
