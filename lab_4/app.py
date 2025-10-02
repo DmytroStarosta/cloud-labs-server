@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from flask_jwt_extended import JWTManager
 from my_project.auth.route.orders.parking_route import parking_bp
-from my_project.config import Config
+from my_project import Config
 from my_project import db
 
 
