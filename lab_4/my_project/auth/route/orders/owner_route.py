@@ -14,6 +14,8 @@ def get_all_owners() -> Response:
     """
     Get all Owners
     ---
+    tags:
+      - Owner
     parameters:
       - name: Authorization
         in: header
@@ -53,6 +55,8 @@ def create_owner() -> Response:
     """
     Create a new Owner
     ---
+    tags:
+      - Owner
     parameters:
       - name: body
         in: body
@@ -108,6 +112,8 @@ def get_owner_by_id(owner_id: int) -> Response:
     """
     Get Owner by ID
     ---
+    tags:
+      - Owner
     parameters:
       - name: Authorization
         in: header
@@ -159,6 +165,8 @@ def update_owner(owner_id: int) -> Response:
     """
     Update Owner by ID
     ---
+    tags:
+      - Owner
     parameters:
       - name: Authorization
         in: header
@@ -213,6 +221,8 @@ def delete_owner(owner_id: int) -> Response:
     """
     Delete Owner by ID
     ---
+    tags:
+      - Owner
     parameters:
       - name: Authorization
         in: header
