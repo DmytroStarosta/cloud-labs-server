@@ -10,6 +10,8 @@ def login() -> Response:
     """
         Login
         ---
+        tags:
+        - Login
         parameters:
         - name: body
           in: body
