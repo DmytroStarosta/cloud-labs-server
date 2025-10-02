@@ -34,7 +34,7 @@ def login() -> Response:
                   example: "<access_token>"
     """
 
-data = request.get_json()
+    data = request.get_json()
     parking = Parking.query.filter_by(name=data["name"]).first()
     if parking is not None and parking.password == data['password']:
         access_token = create_access_token(identity=str(parking.id))

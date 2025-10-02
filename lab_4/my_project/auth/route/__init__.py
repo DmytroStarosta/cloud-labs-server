@@ -16,6 +16,7 @@ def register_routes(app: Flask) -> None:
     from .orders.parking_network_route import parking_network_bp
     from .orders.type_of_voucher_route import type_of_voucher_bp
     from .orders.voucher_route import voucher_bp
+    from lab_4.my_project.auth.route.auth.login import auth_bp
 
     app.register_blueprint(users_bp)
     app.register_blueprint(user_types_bp)
@@ -31,3 +32,4 @@ def register_routes(app: Flask) -> None:
     app.register_blueprint(parking_network_bp)
     app.register_blueprint(type_of_voucher_bp)
     app.register_blueprint(voucher_bp)
+    app.register_blueprint(auth_bp)
