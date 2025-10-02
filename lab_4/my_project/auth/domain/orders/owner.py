@@ -12,7 +12,7 @@ class Owner(db.Model, IDto):
     name = db.Column(db.String(50), nullable=False)
     surname = db.Column(db.String(50), nullable=False)
     age = db.Column(db.Integer, nullable=False)
-    password = db.Column(db.String, nullable=False)
+    password = db.Column(db.String(50), nullable=False)
 
     parking_networks = relationship('ParkingNetwork', back_populates='owner')
 
