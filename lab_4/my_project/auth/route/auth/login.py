@@ -1,4 +1,4 @@
-from flask import Blueprint, Response, make_response, jsonify
+from flask import Blueprint, Response, make_response, jsonify, request
 from http import HTTPStatus
 from flask_jwt_extended import create_access_token
 from my_project.auth.domain.orders.owner import Owner
