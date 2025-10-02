@@ -64,5 +64,14 @@ coverage.xml
 # PyBuilder
 target/
 
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
 #my
 my.py
