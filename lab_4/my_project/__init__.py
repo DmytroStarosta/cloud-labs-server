@@ -10,6 +10,7 @@ import pymysql
 from flasgger import Swagger
 from config import Config
 from flask import Flask
+from flask_jwt_extended import JWTManager
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import database_exists, create_database
 
@@ -30,6 +31,7 @@ def create_app() -> Flask:
 
     app = Flask(__name__)
     app.config.from_object(Config)
+    jwt = JWTManager(app)
     swagger = Swagger(app)
     _init_db(app)
     register_routes(app)
