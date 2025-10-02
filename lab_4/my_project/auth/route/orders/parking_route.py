@@ -5,20 +5,20 @@ from my_project.auth.domain.orders.parking import Parking
 
 parking_bp = Blueprint('parking', __name__, url_prefix='/parkings')
 
-@parking_bp.get('/<int:park_id>')
-def get_park(park_id: int) -> Response:
+@parking_bp.get('/<int:parking_id>')
+def get_parking(parking_id: int) -> Response:
     """
-    Get Park by ID
+    Get Parking by ID
     ---
     parameters:
-      - name: park_id
+      - name: parking_id
         in: path
         type: integer
         required: true
         example: 1
     responses:
       200:
-        description: Park found
+        description: Parking found
         schema:
           type: object
           properties:
@@ -27,7 +27,7 @@ def get_park(park_id: int) -> Response:
               example: 1
             name:
               type: string
-              example: "Park"
+              example: "Parking"
             location:
               type: string
               example: "Lviv"
@@ -41,7 +41,7 @@ def get_park(park_id: int) -> Response:
               type: number
               example: 5
       404:
-        description: Park not found
+        description: Parking not found
     """
     parking = parking_controller.find_by_id(parking_id)
     if parking:
