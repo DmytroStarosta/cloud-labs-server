@@ -8,11 +8,11 @@ from flask_jwt_extended import jwt_required
 owner_bp = Blueprint('owner', __name__, url_prefix='/owners')
 
 
-@owner_bp.route('/<int:owner_id>', methods=['GET'])
+@owner_bp.route('', methods=['GET'])
 @jwt_required()
-def get_owner_by_id(owner_id: int) -> Response:
+def get_all_owners() -> Response:
     """
-    Get Owner by ID
+    Get all Owners
     ---
     parameters:
       - name: Authorization
@@ -21,42 +21,30 @@ def get_owner_by_id(owner_id: int) -> Response:
         required: true
         description: JWT token
         example: "Bearer <your_jwt_token>"
-      - name: owner_id
-        in: path
-        required: true
-        type: integer
-        example: 1
     responses:
       200:
-        description: Owner found
+        description: List of all owners
         schema:
-          type: object
-          properties:
-            id:
-              type: integer
-              example: 1
-            name:
-              type: string
-              example: "John"
-            surname:
-              type: string
-              example: "Doe"
-            age:
-              type: integer
-              example: 35
-      404:
-        description: Owner not found
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Owner not found"
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: "John"
+              surname:
+                type: string
+                example: "Doe"
+              age:
+                type: integer
+                example: 35
     """
-    owner = owner_controller.find_by_id(owner_id)
-    if owner:
-        return make_response(jsonify(owner.put_into_dto()), HTTPStatus.OK)
-    return make_response(jsonify({"error": "Owner not found"}), HTTPStatus.NOT_FOUND)
+    owners = owner_controller.find_all()
+    owner_dto = [owner.put_into_dto() for owner in owners]
+    return make_response(jsonify(owner_dto), HTTPStatus.OK)
 
 
 
