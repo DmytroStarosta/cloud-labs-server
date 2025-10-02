@@ -43,8 +43,8 @@ def get_park(park_id: int) -> Response:
       404:
         description: Park not found
     """
-    parking = parking_controller.find_by_id(park_id)
-    if park:
+    parking = parking_controller.find_by_id(parking_id)
+    if parking:
         return make_response(jsonify(parking.put_into_dto()), HTTPStatus.OK)
     return make_response(jsonify({"error": "Parking not found"}), HTTPStatus.NOT_FOUND)
 
