@@ -1,6 +1,10 @@
-from my import db_password, db_host
+from my import jwt_secret_key,db_password, db_host
 
 class Config:
+    JWT_TOKEN_LOCATION = ["headers"]
+    JWT_HEADER_NAME = "Authorization"
+    JWT_HEADER_TYPE = "Bearer"
+    JWT_SECRET_KEY = jwt_secret_key
 
     DB_USER = "admin"
     DB_PASSWORD = db_password
