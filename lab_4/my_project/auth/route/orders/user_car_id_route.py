@@ -2,6 +2,7 @@ from http import HTTPStatus
 from flask import Blueprint, jsonify, Response, request, make_response
 from my_project.auth.controller import user_car_id_controller
 from my_project.auth.domain.orders.user_car_id import UserCarId
+from flask_jwt_extended import jwt_required
 
 user_car_id_bp = Blueprint('user_car_id', __name__, url_prefix='/user_car_id')
 

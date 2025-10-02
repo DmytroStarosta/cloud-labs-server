@@ -2,6 +2,7 @@ from http import HTTPStatus
 from flask import Blueprint, jsonify, Response, request, make_response
 from my_project.auth.controller import type_of_voucher_controller
 from my_project.auth.domain.orders.type_of_voucher import TypeOfVoucher
+from flask_jwt_extended import jwt_required
 
 type_of_voucher_bp = Blueprint('type_of_voucher', __name__, url_prefix='/type_of_voucher')
 

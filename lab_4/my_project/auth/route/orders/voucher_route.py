@@ -2,6 +2,7 @@ from http import HTTPStatus
 from flask import Blueprint, jsonify, Response, request, make_response
 from my_project.auth.controller import voucher_controller
 from my_project.auth.domain.orders.voucher import Voucher
+from flask_jwt_extended import jwt_required
 
 voucher_bp = Blueprint('voucher', __name__, url_prefix='/voucher')
 

@@ -2,6 +2,7 @@ from http import HTTPStatus
 from flask import Blueprint, jsonify, Response, request, make_response
 from my_project.auth.controller import user_controller
 from my_project.auth.domain.orders.user import User
+from flask_jwt_extended import jwt_required
 
 users_bp = Blueprint('users', __name__, url_prefix='/users')
 

@@ -2,6 +2,7 @@ from http import HTTPStatus
 from flask import Blueprint, jsonify, Response, request, make_response
 from my_project.auth.controller import status_type_controller
 from my_project.auth.domain.orders.status_type import StatusType
+from flask_jwt_extended import jwt_required
 
 status_type_bp = Blueprint('status_type', __name__, url_prefix='/status_types')
 

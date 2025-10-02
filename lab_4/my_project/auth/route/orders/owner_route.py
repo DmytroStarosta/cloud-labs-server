@@ -4,6 +4,7 @@ from my_project.auth.controller import owner_controller
 from my_project.auth.domain.orders.owner import Owner
 from flask_jwt_extended import jwt_required
 
+
 owner_bp = Blueprint('owner', __name__, url_prefix='/owners')
 
 

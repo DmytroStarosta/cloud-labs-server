@@ -3,6 +3,7 @@ from flask import Blueprint, jsonify, Response, request, make_response
 from flask_jwt_extended import jwt_required
 from my_project.auth.controller import parking_controller
 from my_project.auth.domain.orders.parking import Parking
+from flask_jwt_extended import jwt_required
 
 parking_bp = Blueprint('parking', __name__, url_prefix='/parkings')
 

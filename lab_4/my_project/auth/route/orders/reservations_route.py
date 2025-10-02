@@ -2,6 +2,7 @@ from http import HTTPStatus
 from flask import Blueprint, jsonify, Response, request, make_response
 from my_project.auth.controller import reservations_controller
 from my_project.auth.domain.orders.reservations import Reservations
+from flask_jwt_extended import jwt_required
 
 reservations_bp = Blueprint('reservations', __name__, url_prefix='/reservations')
 

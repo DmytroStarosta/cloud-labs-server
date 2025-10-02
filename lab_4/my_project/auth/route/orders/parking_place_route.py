@@ -2,6 +2,7 @@ from http import HTTPStatus
 from flask import Blueprint, jsonify, Response, request, make_response
 from my_project.auth.controller import parking_place_controller
 from my_project.auth.domain.orders.parking_place import ParkingPlace
+from flask_jwt_extended import jwt_required
 
 parking_place_bp = Blueprint('parking_place', __name__, url_prefix='/parking_places')
 

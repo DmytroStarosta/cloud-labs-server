@@ -2,6 +2,7 @@ from http import HTTPStatus
 from flask import Blueprint, jsonify, Response, request, make_response
 from my_project.auth.controller import address_controller
 from my_project.auth.domain.orders.address import Address
+from flask_jwt_extended import jwt_required
 
 address_bp = Blueprint('address', __name__, url_prefix='/address')
 

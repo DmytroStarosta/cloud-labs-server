@@ -2,6 +2,7 @@ from http import HTTPStatus
 from flask import Blueprint, jsonify, Response, request, make_response
 from my_project.auth.controller import user_type_controller
 from my_project.auth.domain.orders.user_type import UserType
+from flask_jwt_extended import jwt_required
 
 user_types_bp = Blueprint('user_types', __name__, url_prefix='/user_types')
 
