@@ -8,45 +8,45 @@ from flask_jwt_extended import jwt_required
 owner_bp = Blueprint('owner', __name__, url_prefix='/owners')
 
 
-@owner_bp.route('', methods=['GET'])
-@jwt_required()
-def get_all_owners() -> Response:
-    """
-    Get all Owners
-    ---
-    tags:
-      - Owner
-    parameters:
-      - name: Authorization
-        in: header
-        type: string
-        required: true
-        description: JWT token
-        example: "Bearer <your_jwt_token>"
-    responses:
-      200:
-        description: List of all owners
-        schema:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-                example: 1
-              name:
-                type: string
-                example: "John"
-              surname:
-                type: string
-                example: "Doe"
-              age:
-                type: integer
-                example: 35
-    """
-    owners = owner_controller.find_all()
-    owner_dto = [owner.put_into_dto() for owner in owners]
-    return make_response(jsonify(owner_dto), HTTPStatus.OK)
+# @owner_bp.route('', methods=['GET'])
+# @jwt_required()
+# def get_all_owners() -> Response:
+#     """
+#     Get all Owners
+#     ---
+#     tags:
+#       - Owner
+#     parameters:
+#       - name: Authorization
+#         in: header
+#         type: string
+#         required: true
+#         description: JWT token
+#         example: "Bearer <your_jwt_token>"
+#     responses:
+#       200:
+#         description: List of all owners
+#         schema:
+#           type: array
+#           items:
+#             type: object
+#             properties:
+#               id:
+#                 type: integer
+#                 example: 1
+#               name:
+#                 type: string
+#                 example: "John"
+#               surname:
+#                 type: string
+#                 example: "Doe"
+#               age:
+#                 type: integer
+#                 example: 35
+#     """
+#     owners = owner_controller.find_all()
+#     owner_dto = [owner.put_into_dto() for owner in owners]
+#     return make_response(jsonify(owner_dto), HTTPStatus.OK)
 
 
 
