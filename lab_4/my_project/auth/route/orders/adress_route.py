@@ -8,20 +8,12 @@ address_bp = Blueprint('address', __name__, url_prefix='/address')
 
 
 @address_bp.route('', methods=['GET'])
-@jwt_required()
 def get_all_addresses() -> Response:
     """
     Get all Addresses
     ---
     tags:
       - Address
-    parameters:
-      - name: Authorization
-        in: header
-        type: string
-        required: true
-        description: JWT token
-        example: "Bearer <your_jwt_token>"
     responses:
       200:
         description: List of all addresses

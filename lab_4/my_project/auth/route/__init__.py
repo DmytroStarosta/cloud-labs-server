@@ -17,6 +17,7 @@ def register_routes(app: Flask) -> None:
     from .orders.type_of_voucher_route import type_of_voucher_bp
     from .orders.voucher_route import voucher_bp
     from .auth.login import auth_bp
+    from .orders.health_check import health_bp
 
     app.register_blueprint(users_bp)
     app.register_blueprint(user_types_bp)
@@ -33,3 +34,4 @@ def register_routes(app: Flask) -> None:
     app.register_blueprint(type_of_voucher_bp)
     app.register_blueprint(voucher_bp)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(health_bp)
